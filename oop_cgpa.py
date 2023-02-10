@@ -1,67 +1,59 @@
-class grade_point:
-    name_list = []
-    score_list = []
-    grade_list = []
-    details_list = []
-    gpa_list = []
-    sum_gotten_point = 0
-    sum_point = 0
-    sum_gpa = 0
-    cgpa = 0
-    def __init__(self):
-        self.name = str(input("Enter the name of student: "))
-        self.name_list.append(self.name)
+class GradePoint:
+    def __init__(self, name, courses, scores, units):
+        self.__name = name
+        self.__num_of_courses = courses
+        self.__score_list = scores
+        self.__unit_list = units
+    
+    def __score_converter(self, score):
+        count = 5
+        for x in [70,60,50,40,30,0]:
+            if score >= x:
+                return count
+            count -= 1
 
-    def score_cal(self):
-        self.course_num = int(input("How many courses do you offer: "))
-        for c in range(self.course_num):
-            score = int(input("Enter the score of the courses: "))
-            unit = int(input("Enter the unit of the courses: "))
-            self.score_list.append(score)
+    def __cgpa(self):
+        total_score = 0
+        value_list = list(map(self.__score_converter,self.__score_list))
+        for x in range(self.__num_of_courses):
+            unit_value = value_list[x]
+            total_score +=  unit_value * self.__unit_list[x]
 
-            if score >= 70 and score <= 100:
-                grade = "A"
-                point = 5
-                gpa = 5 * 5
-            if score >= 60 and score <= 69:
-                grade = "B"
-                point = 4
-                gpa = 5 * 4
-            if score >= 50 and score <= 59:
-                grade = "C"
-                point = 3
-                gpa = 5 * 3
-            if score >= 40 and score <= 49:
-                grade = "D"
-                point = 2
-                gpa = 5 * 2
-            if score >= 30 and score <= 39:
-                grade = "E"
-                point = 1
-                gpa = 5 * 1
-            if score >= 0 and score <= 29:
-                grade = "F"
-                point = 0
-                gpa = 5 * 0
-            # else:
-            # print("Invalid Grade")
-            self.grade_list.append(grade)
-            attainable_sum = unit * 5
-            attained_sum = point * unit
-            self.sum_gotten_point += attained_sum
-            self.sum_point += attainable_sum
-            self.gpa = (self.sum_gotten_point / self.sum_point) * 5
-            self.gpa_list.append(gpa)
+        gpa = total_score/sum(self.__unit_list)
+        return gpa
 
-    def output(self):
-        print(f"Name of Student: {self.name}")
-        print(f"Number of Courses: {self.course_num}")
-        print(f"Score in courses: {self.score_list}")
-        print(f"Respective Grades in Courses: {self.grade_list}")
-        print(f"GPA: {self.gpa:.3f}")
+    def __grade_converter(self, score):
+        grades = ['A','B','C','D','E','F']
+        for idx,value in enumerate([70,60,50,40,30,0]):
+            if score >= value:
+                return grades[idx]
+                
+    def __grades(self):
+        grade_list = list(map(self.__grade_converter,self.__score_list))
+        grades = []
+        for x in range(self.__num_of_courses):
+            value = grade_list[x]
+            grades.append(value)
+        return grades
+            
+    def __str__(self):
+        student_details = f"Student Name:{self.__name}\nNumber of Courses:{self.__num_of_courses}\
+            \nScore in Courses:{self.__score_list}\nRespective Grades:{self.__grades()}\nGPA:{self.__cgpa()}"
+        return student_details
 
+def main():
+    name = input("Name:")           
+    num_courses = int(input("Number of Courses:"))
+    scores = []
+    units = []
+    for x in range(num_courses):
+        score = int(input(f"[{x+1}]Score in course:"))
+        scores.append(score)
+        unit = int(input(f"[{x+1}]Unit of course:"))
+        units.append(unit)
+    student = GradePoint(name, num_courses, scores, units)
+    print(student)
+   
 
-
-p1 = grade_point()
-p1.score_cal()
-p1.output()
+if __name__ == "__main__":
+    main()
