@@ -1,9 +1,10 @@
 class GradePoint:
-    def __init__(self, name, courses, scores, units):
+    def __init__(self, name, courses, scores, units,num):
         self.__name = name
         self.__num_of_courses = courses
         self.__score_list = scores
         self.__unit_list = units
+        self.__check__num = num
     
     def __score_converter(self, score):
         count = 5
@@ -41,16 +42,27 @@ class GradePoint:
             \nScore in Courses:{self.__score_list}\nRespective Grades:{self.__grades()}\nGPA:{self.__cgpa()}"
         return student_details
 
+
 def main():
-    name = input("Name:")           
-    num_courses = int(input("Number of Courses:"))
+    try:
+        name = input("Name:")
+        num_courses = int(input("Number of Courses:"))
+    except ValueError:
+        print("Input proper digits!!")
+        main()
+        pass
     scores = []
     units = []
     for x in range(num_courses):
-        score = int(input(f"[{x+1}]Score in course:"))
-        scores.append(score)
-        unit = int(input(f"[{x+1}]Unit of course:"))
-        units.append(unit)
+        try:
+            score = int(input(f"[{x+1}]Score in course:"))
+            scores.append(score)
+            unit = int(input(f"[{x+1}]Unit of course:"))
+            units.append(unit)
+        except ValueError:
+            print("Input the right score in digits next time")
+            main()
+            pass
     student = GradePoint(name, num_courses, scores, units)
     print(student)
    
