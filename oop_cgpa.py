@@ -1,10 +1,9 @@
 class GradePoint:
-    def __init__(self, name, courses, scores, units,num):
+    def __init__(self, name, courses, scores, units):
         self.__name = name
         self.__num_of_courses = courses
         self.__score_list = scores
         self.__unit_list = units
-        self.__check__num = num
     
     def __score_converter(self, score):
         count = 5
@@ -18,7 +17,7 @@ class GradePoint:
         value_list = list(map(self.__score_converter,self.__score_list))
         for x in range(self.__num_of_courses):
             unit_value = value_list[x]
-            total_score +=  unit_value * self.__unit_list[x]
+            total_score += unit_value * self.__unit_list[x]
 
         gpa = total_score/sum(self.__unit_list)
         return gpa
@@ -44,27 +43,41 @@ class GradePoint:
 
 
 def main():
-    try:
-        name = input("Name:")
-        num_courses = int(input("Number of Courses:"))
-    except ValueError:
-        print("Input proper digits!!")
-        main()
-        pass
-    scores = []
-    units = []
-    for x in range(num_courses):
+    while True:
         try:
-            score = int(input(f"[{x+1}]Score in course:"))
-            scores.append(score)
-            unit = int(input(f"[{x+1}]Unit of course:"))
-            units.append(unit)
+            name = input("Name:")
+            num_courses = int(input("Number of Courses:"))
         except ValueError:
-            print("Input the right score in digits next time")
+            print("Input proper digits!!")
             main()
             pass
-    student = GradePoint(name, num_courses, scores, units)
-    print(student)
+        scores = []
+        units = []
+        for x in range(num_courses):
+            try:
+                score = int(input(f"[{x+1}]Score in course:"))
+                scores.append(score)
+                unit = int(input(f"[{x+1}]Unit of course:"))
+                units.append(unit)
+            except ValueError:
+                print("Input the right score in digits next time")
+                main()
+                pass
+        student = GradePoint(name,num_courses, scores, units)
+        print(student)
+
+        print(
+            "...........................................................................................................")
+        prompt = input("Do you wish to get another student(s) GPA? 'if yes, press y, if no, press x' (y/n): ")
+        if prompt == 'y' or prompt == 'Y':
+            main()
+            pass
+        elif prompt == 'n' or prompt == 'N':
+            print("Bye")
+            exit()
+        else:
+            print("Input the right response")
+            exit()
    
 
 if __name__ == "__main__":
