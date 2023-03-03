@@ -35,13 +35,14 @@ class GradePoint:
             value = grade_list[x]
             grades.append(value)
         return grades
-            
+
+            #method to get student details
     def __str__(self):
         student_details = f"Student Name:{self.__name}\nNumber of Courses:{self.__num_of_courses}\
             \nScore in Courses:{self.__score_list}\nRespective Grades:{self.__grades()}\nGPA:{self.__cgpa()}"
         return student_details
 
-
+#main method
 def main():
     while True:
         try:
