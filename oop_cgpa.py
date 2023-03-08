@@ -1,4 +1,5 @@
 class GradePoint:
+    #getting details
     def __init__(self, name, courses, scores, units):
         self.__name = name
         self.__num_of_courses = courses
@@ -6,6 +7,7 @@ class GradePoint:
         self.__unit_list = units
     
     def __score_converter(self, score):
+        #getting score point
         count = 5
         for x in [70,60,50,40,30,0]:
             if score >= x:
@@ -13,6 +15,7 @@ class GradePoint:
             count -= 1
 
     def __cgpa(self):
+        #calculating cgpa
         total_score = 0
         value_list = list(map(self.__score_converter,self.__score_list))
         for x in range(self.__num_of_courses):
@@ -23,12 +26,14 @@ class GradePoint:
         return gpa
 
     def __grade_converter(self, score):
+        #generating grades
         grades = ['A','B','C','D','E','F']
         for idx,value in enumerate([70,60,50,40,30,0]):
             if score >= value:
                 return grades[idx]
                 
     def __grades(self):
+        #using grade to generate points
         grade_list = list(map(self.__grade_converter,self.__score_list))
         grades = []
         for x in range(self.__num_of_courses):
@@ -38,6 +43,7 @@ class GradePoint:
 
             #method to get student details
     def __str__(self):
+        #returning student details
         student_details = f"Student Name:{self.__name}\nNumber of Courses:{self.__num_of_courses}\
             \nScore in Courses:{self.__score_list}\nRespective Grades:{self.__grades()}\nGPA:{self.__cgpa()}"
         return student_details
