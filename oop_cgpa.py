@@ -1,5 +1,5 @@
 class GradePoint:
-    #getting details
+   
     def __init__(self, name, courses, scores, units):
         self.__name = name
         self.__num_of_courses = courses
@@ -61,6 +61,7 @@ def main():
         scores = []
         units = []
         for x in range(num_courses):
+            #catching input error
             try:
                 score = int(input(f"[{x+1}]Score in course:"))
                 scores.append(score)
